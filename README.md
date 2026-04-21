@@ -37,6 +37,7 @@ Qua kiểm tra cấu trúc:
 - Package đã cài đặt các thư mục `config`, `launch`, `maps`, `meshes`, `urdf` trong `CMakeLists.txt`, nên layout hiện tại có thể dùng để build/chạy.
 
 
+
 ## Open Gazebo + Rviz with thiendac's robot (run this code first)
 
 pkill -f gzserver
