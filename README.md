@@ -1,10 +1,10 @@
 # agv_ros
 
-ROS 2 package cho mô hình AGV dùng URDF, mesh STL, launch file cho RViz2/Gazebo, và một số script điều khiển cơ bản.
+ROS 2 package cho mo hinh AGV dung URDF, mesh STL, launch file cho RViz2/Gazebo, va mot so script dieu khien co ban.
 
-File mô hình chính hiện tại là `urdf/demo2.urdf`. File này được giữ nguyên, không chỉnh sửa trong phần sắp xếp repo này.
+File mo hinh chinh hien tai la `urdf/demo2.urdf`. File nay duoc giu nguyen, khong chinh sua trong phan sap xep repo nay.
 
-## Cấu trúc chính
+## Cau truc chinh
 
 ```text
 agv_ros/
@@ -18,20 +18,32 @@ agv_ros/
 └── urdf/
     ├── demo2.urdf
     └── demo2.csv
-Những gì đang có trong package
-urdf/demo2.urdf: mô hình robot chính.
-meshes/: các file STL được tham chiếu trong URDF qua package://agv_ros/....
-launch/display.launch.py: hiển thị robot với robot_state_publisher, joint_state_publisher_gui, rviz2.
-launch/gazebo_display.launch.py: spawn robot trong Gazebo.
-scripts/: script teleop và điều khiển cơ bản.
-Kiểm tra nhanh file URDF
+```
 
-Qua kiểm tra cấu trúc:
+## Nhung gi dang co trong package
 
-URDF hợp lệ về mặt tổ chức file trong package ROS 2.
-Mesh đang được tham chiếu theo dạng package://agv_ros/meshes/..., phù hợp với cấu trúc hiện tại.
-Package đã cài đặt các thư mục config, launch, maps, meshes, urdf trong CMakeLists.txt, nên layout hiện tại có thể dùng để build/chạy.
-Open Gazebo + Rviz with thiendac's robot (run this code first)
+- `urdf/demo2.urdf`: mo hinh robot chinh.
+- `urdf/demo2.csv`: file du lieu lien quan den mo hinh.
+- `meshes/`: cac file STL duoc tham chieu trong URDF qua `package://agv_ros/...`.
+- `launch/display.launch.py`: hien thi robot voi `robot_state_publisher`, `joint_state_publisher_gui`, `rviz2`.
+- `launch/gazebo_display.launch.py`: spawn robot trong Gazebo.
+- `launch/slam_hexagon.launch.py`: chay SLAM.
+- `scripts/mecanum_keyboard_teleop.py`: teleop cho de mecanum.
+- `scripts/arm_teleop.py`: dieu khien canh tay co ban.
+
+## Kiem tra nhanh file URDF
+
+Qua kiem tra cau truc:
+
+- URDF hop le ve mat to chuc file trong package ROS 2.
+- Mesh dang duoc tham chieu theo dang `package://agv_ros/meshes/...`, phu hop voi cau truc hien tai.
+- Package da cai dat cac thu muc `config`, `launch`, `maps`, `meshes`, `urdf` trong `CMakeLists.txt`, nen layout hien tai co the dung de build va chay.
+
+## Chay Gazebo va RViz
+
+Lenh duoi day dung de mo Gazebo va RViz voi robot hien tai:
+
+```bash
 pkill -f gzserver
 pkill -f gzclient
 cd ~/ros2_ws
@@ -39,47 +51,77 @@ colcon build --packages-select agv_ros --symlink-install
 source install/setup.bash
 export ROS_DOMAIN_ID=69
 ros2 launch agv_ros gazebo_display.launch.py
-HUONG DAN
-mecanum controller
+```
+
+## Huong dan su dung
+
+### Mecanum controller
+
+```bash
 cd ~/ros2_ws
 source install/setup.bash
 export ROS_DOMAIN_ID=69
 ros2 run agv_ros mecanum_keyboard_teleop.py
-arm controller
+```
+
+### Arm controller
+
+```bash
 cd ~/ros2_ws
 source install/setup.bash
 export ROS_DOMAIN_ID=69
 ros2 run agv_ros arm_teleop.py
-cam view
+```
+
+### Camera view
+
+```bash
 cd ~/ros2_ws
 source install/setup.bash
 export ROS_DOMAIN_ID=69
 ros2 run rqt_image_view rqt_image_view
-data gps
+```
+
+### Du lieu GPS
+
+```bash
 cd ~/ros2_ws
 source install/setup.bash
 export ROS_DOMAIN_ID=69
 ros2 topic echo /gps/data
-Chay slam scan map
+```
+
+### Chay SLAM scan map
+
+```bash
 cd ~/ros2_ws
 source install/setup.bash
 export ROS_DOMAIN_ID=69
 ros2 launch agv_ros slam_hexagon.launch.py
-check cay Tree parent-child
+```
+
+### Kiem tra cay TF parent-child
+
+```bash
 cd ~/ros2_ws
 source install/setup.bash
 export ROS_DOMAIN_ID=69
 ros2 run tf2_tools view_frames
-Đưa lên GitHub
+```
 
-Repo này nên đưa lên cùng các thư mục nguồn:
+## Dua len GitHub
 
-config/
-launch/
-maps/
-meshes/
-scripts/
-urdf/
-CMakeLists.txt
-package.xml
-README.md
+Repo nay nen dua len cung cac thu muc nguon:
+
+- `config/`
+- `launch/`
+- `maps/`
+- `meshes/`
+- `scripts/`
+- `urdf/`
+- `CMakeLists.txt`
+- `package.xml`
+- `README.md`
+
+Khong nen dua cac thu muc sinh ra khi build nhu `build/`, `install/`, `log/`.
+
