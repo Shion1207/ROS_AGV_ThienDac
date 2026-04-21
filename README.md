@@ -36,15 +36,17 @@ Qua kiểm tra cấu trúc:
 - Mesh đang được tham chiếu theo dạng `package://agv_ros/meshes/...`, phù hợp với cấu trúc hiện tại.
 - Package đã cài đặt các thư mục `config`, `launch`, `maps`, `meshes`, `urdf` trong `CMakeLists.txt`, nên layout hiện tại có thể dùng để build/chạy.
 
-## Chạy thử
+## Chạy robot len Rviz va Gazebo
 
-Sau khi build workspace:
-
-```bash
-colcon build --packages-select agv_ros
+Spkill -f gzserver
+pkill -f gzclient
+cd ~/ros2_ws
+colcon build --packages-select agv_ros --symlink-install
 source install/setup.bash
-ros2 launch agv_ros display.launch.py
-```
+export ROS_DOMAIN_ID=69
+ros2 launch agv_ros gazebo_display.launch.py
+
+## Chạy robot len Rviz va Gazebo
 
 Chạy với Gazebo:
 
@@ -52,6 +54,42 @@ Chạy với Gazebo:
 source install/setup.bash
 ros2 launch agv_ros gazebo_display.launch.py
 ```
+## Mecanum controller
+
+cd ~/ros2_ws
+source install/setup.bash
+export ROS_DOMAIN_ID=69
+ros2 run agv_ros mecanum_keyboard_teleop.py
+
+## Arms controller
+
+cd ~/ros2_ws
+source install/setup.bash
+export ROS_DOMAIN_ID=69
+ros2 run agv_ros arm_teleop.py
+
+
+## Cam view
+
+cd ~/ros2_ws
+source install/setup.bash
+export ROS_DOMAIN_ID=69
+ros2 run rqt_image_view rqt_image_view
+
+## GPS
+
+cd ~/ros2_ws
+source install/setup.bash
+export ROS_DOMAIN_ID=69
+ros2 topic echo /gps/data
+
+
+## SLAM Scan map
+
+cd ~/ros2_ws
+source install/setup.bash
+export ROS_DOMAIN_ID=69
+ros2 launch agv_ros slam_hexagon.launch.py
 
 ## Đưa lên GitHub
 
